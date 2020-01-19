@@ -1,0 +1,12 @@
+html, 
+body 
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: 0 !important;
+  background: rgb(44, 44, 44);
+  overflow: hidden;
+  overflow-y: hidden;
+	/* -webkit-overflow-scrolling:touch; */
+}
