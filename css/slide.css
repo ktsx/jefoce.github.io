@@ -1,13 +1,26 @@
 .slide-container {
+    position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
+    height: 100vh;
+    overflow: auto;
+    overflow-y: auto;
+}
+
+.slide-container::before {
+    content: '';
+    height: 5vh;
+    width: 100%;
+    background: rgb(44, 44, 44);
+    z-index: 1;
 }
 
 .ss-slide {
     position: absolute;
     transition: 500ms ease-in-out;
     z-index: 0;
+    min-height: 50%;
     height: 90%;
     width: 70%;
     border-radius: 50px;
@@ -33,12 +46,10 @@
     width: 95%;
     opacity: 1;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-
     -webkit-transition: 300ms cubic-bezier(.17, .67, .2, .82);
     -moz-transition: 300ms cubic-bezier(.17, .67, .2, .82);
     -ms-transition: 300ms cubic-bezier(.17, .67, .2, .82);
     -o-transition: 300ms cubic-bezier(.17, .67, .2, .82);
-
     -webkit-border-radius: 80px;
     -moz-border-radius: 80px;
     -ms-border-radius: 80px;
@@ -102,10 +113,4 @@
 
 #s6 {
     background: rgb(35, 35, 35);
-}
-
-@media only screen and (min-width : 768px) and (max-width : 1023px) {
-    .ss-slide {
-        min-height: 50%;
-    }
 }

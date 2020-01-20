@@ -24,18 +24,16 @@ export function SlideScroller(
 
     const canMove = {
         state: true,
-        update() {
-            const update = () => {
-                const delay = Symbol('delay')
+        update(duration) {
+            const update = (duration) => {
+                this.state = false
 
-                clearTimeout(this[delay])
-
-                this[delay] = setTimeout(() => {
+                this['delay'] = setTimeout(() => {
                     this.state = true
-                }, 350)
+                }, duration)
             }
 
-            update()
+            update(duration)
         }
     }
 
@@ -69,11 +67,11 @@ export function SlideScroller(
             slides[index].classList.add(currentClass)
             slides[next].classList.add(nextClass)
 
-            for (const slide of [slides[prev], slides[index], slides[next]]) {
-                slide.addEventListener('transitionend', canMove.update(), false)
-            }
-
-            canMove.state = false
+            canMove.update(Math.max(
+                getDuration(slides[prev]),
+                getDuration(slides[index]),
+                getDuration(slides[next]),
+            ))
         }
     }
 
@@ -91,6 +89,11 @@ export function SlideScroller(
         }
 
         return +index.toFixed() || 0
+    }
+
+    function getDuration(slide) {
+        const style = window.getComputedStyle(slide)
+        return +style.transitionDuration.replace('s', '') * 1000
     }
 
     // Initialization
