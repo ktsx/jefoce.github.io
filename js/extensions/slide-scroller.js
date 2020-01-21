@@ -1,5 +1,5 @@
 /*
- * Version: 1.0.1 
+ * Version: 1.0.2
  * Telegram: @jefoce
  */
 
@@ -76,16 +76,11 @@ export function SlideScroller(
     }
 
     function correctIndex(index) {
-        const inverse = Math.abs(index)
-
         if (index >= max) {
             index %= max
         }
-        else if (index < 0 && inverse <= max) {
-            index = max - inverse
-        }
-        else if (index < 0 && inverse >= max) {
-            index = max - inverse % max
+        else if (index < 0) {
+            index = max + index % max
         }
 
         return +index.toFixed() || 0
