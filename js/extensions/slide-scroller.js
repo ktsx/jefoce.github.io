@@ -28,7 +28,7 @@ export function SlideScroller(
             const update = (duration) => {
                 this.state = false
 
-                this['delay'] = setTimeout(() => {
+                setTimeout(() => {
                     this.state = true
                 }, duration)
             }
