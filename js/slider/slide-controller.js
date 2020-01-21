@@ -10,10 +10,10 @@ const lastTouch = {
 for (const slide of scroller.list) {
 
     slide.addEventListener('wheel', (e) => {
-        e.preventDefault()
+        e.preventDefault()     
 
-        if (e.deltaY > 25) scroller.move(1)
-        else if (e.deltaY < -25) scroller.move(-1)
+        if (e.deltaY > 0) scroller.move(1)
+        else scroller.move(-1)
     })
 
     slide.addEventListener('touchstart', (e) => {
