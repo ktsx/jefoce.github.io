@@ -1,27 +1,33 @@
 import { SlideScroller } from '../extensions/slide-scroller.js'
 
 const scroller = new SlideScroller(1)
-
-const lastTouch = {
-    y: 0,
-    scrolled: false
-}
+const events = new eventsHandler()
 
 for (const slide of scroller.list) {
+    for (const event in events) {
+        slide.addEventListener(event, events[event], false)
+    }
+}
 
-    slide.addEventListener('wheel', (e) => {
-        e.preventDefault()     
+function eventsHandler(){
+    const lastTouch = {
+        y: 0,
+        scrolled: false
+    }
 
-        if (e.deltaY > 0) scroller.move(1)
-        else scroller.move(-1)
-    })
+    this.wheel = (e) => {
+            e.preventDefault()
 
-    slide.addEventListener('touchstart', (e) => {
+            if (e.deltaY > 0) scroller.move(1)
+            else scroller.move(-1)
+        }
+
+    this.touchstart = (e) => {
         lastTouch.y = e.targetTouches[0].clientY
         lastTouch.scrolled = false
-    })
+    }
 
-    slide.addEventListener('touchmove', (e) => {
+    this.touchmove = (e) => {
         e.preventDefault()
 
         const currentTouchY = e.targetTouches[0].clientY;
@@ -39,5 +45,8 @@ for (const slide of scroller.list) {
                 lastTouch.scrolled = true
             }
         }
-    })
+    }
+
+    // Initialization
+    Object.freeze(this)
 }

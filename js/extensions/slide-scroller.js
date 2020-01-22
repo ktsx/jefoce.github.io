@@ -1,5 +1,5 @@
 /*
- * Version: 1.0.2
+ * Version: 1.0.3
  * Telegram: @jefoce
  */
 
@@ -19,8 +19,8 @@ export function SlideScroller(
     currentClass = 'ss-slide-current',
     nextClass = 'ss-slide-next') {
 
-    let slides = document.getElementsByClassName(slideClass)
-    let max = 0
+    let duration = 0
+    const slides = document.getElementsByClassName(slideClass)
 
     const canMove = {
         state: true,
@@ -49,7 +49,6 @@ export function SlideScroller(
      */
     this.move = (direction) => {
         if (canMove.state) {
-            max = slides.length
             index = correctIndex(index + direction)
 
             const prev = correctIndex(index - 1)
@@ -67,20 +66,24 @@ export function SlideScroller(
             slides[index].classList.add(currentClass)
             slides[next].classList.add(nextClass)
 
-            canMove.update(Math.max(
-                getDuration(slides[prev]),
-                getDuration(slides[index]),
-                getDuration(slides[next]),
-            ))
+            if (duration === 0) {
+                duration = Math.max(
+                    getDuration(slides[prev]),
+                    getDuration(slides[index]),
+                    getDuration(slides[next])
+                )
+            }
+
+            canMove.update(duration)
         }
     }
 
     function correctIndex(index) {
-        if (index >= max) {
-            index %= max
+        if (index >= slides.length) {
+            index %= slides.length
         }
         else if (index < 0) {
-            index = max + index % max
+            index = slides.length + index % slides.length
         }
 
         return +index.toFixed() || 0
